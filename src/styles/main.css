@@ -1,24 +1,18 @@
 .resultsBoard {
   display: flex;
   font-size: 10px;
+  justify-content: center;
 }
 
-.resultDrink {
+.resultDrink, .resultMovie, .resultBook {
   display: flex;
   flex-direction: column;
-}
-
-.resultMovie {
-  display: flex;
-  flex-direction: column;
-}
-
-.resultBook {
-  display: flex;
-  flex-direction: column;
+  align-items: center;
+  width: 30%;
+  margin: 10px;
 }
 
 img {
-  width: 150px;
+  width: 90%;
   height: 150px;
 }
