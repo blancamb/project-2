@@ -1,0 +1,24 @@
+.resultsBoard {
+  display: flex;
+  font-size: 10px;
+}
+
+.resultDrink {
+  display: flex;
+  flex-direction: column;
+}
+
+.resultMovie {
+  display: flex;
+  flex-direction: column;
+}
+
+.resultBook {
+  display: flex;
+  flex-direction: column;
+}
+
+img {
+  width: 150px;
+  height: 150px;
+}
