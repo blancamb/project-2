@@ -1,5 +1,7 @@
 import React from 'react'
 import axios from 'axios'
+import Form from '../components/Form'
+import Result from '../components/Result'
 
 class Generator extends React.Component {
 
@@ -17,23 +19,26 @@ class Generator extends React.Component {
   }
 
   async findTheCocktail() {
+    try {
+      const resCocktails = await axios.get(`https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=${this.state.selectedSpirit}`)
+      this.setState({ allCocktails: resCocktails.data })
+      console.log(this.state.allCocktails)
 
-    const resCocktails = await axios.get(`https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=${this.state.selectedSpirit}`)
-    this.setState({ allCocktails: resCocktails.data })
-    console.log(this.state.allCocktails)
+      const resMovies = await axios.get(`http://www.omdbapi.com/?s=${this.state.movieWord}&apikey=21bb5b6c`)
+      this.setState({ allMovies: resMovies.data })
+      console.log("single movie", this.state.singleMovie)
 
-    const resMovies = await axios.get(`http://www.omdbapi.com/?s=${this.state.movieWord}&apikey=21bb5b6c`)
-    this.setState({ allMovies: resMovies.data })
-    console.log("single movie", this.state.singleMovie)
-
-    const resBooks = await axios.get(`https://www.googleapis.com/books/v1/volumes?q=intitle:${this.state.movieWord}&key=AIzaSyCScg4gVkYgMBbiT570cWxN7mc8zGgGwmg`)
-    this.setState({ allBooks: resBooks.data })
-    console.log("single book", this.state.singleBook)
+      const resBooks = await axios.get(`https://www.googleapis.com/books/v1/volumes?q=intitle:${this.state.movieWord}&key=AIzaSyCScg4gVkYgMBbiT570cWxN7mc8zGgGwmg`)
+      this.setState({ allBooks: resBooks.data })
+      console.log("single book", this.state.singleBook)
 
 
-    this.getSingleCocktail()
-    this.getSingleMovie()
-    this.getSingleBook()
+      this.getSingleCocktail()
+      this.getSingleMovie()
+      this.getSingleBook()
+    } catch (err) {
+      this.props.history.push('./error')
+    }
   }
 
 
@@ -82,33 +87,16 @@ class Generator extends React.Component {
     return (
       <>
         <h1>GENERATOR PAGE</h1>
-        <select onChange={this.handleSelect}
-          selectedvalue="selected">
-          <option value="selected" selected disabled>Choose a Spirit:</option>
-          {this.state.allSpirits.map(spirit => {
-            return <option key={spirit}>{spirit}</option>
-          })
-          }
-        </select>
-        <input onChange={this.handleInput}
-          type="text" placeholder="type a word" >
-        </input>
-        <button onClick={this.handleClick}>Generate Results</button>
-        <div className="resultsBoard">
-          <div className="resultDrink">
-            <h2>{this.state.singleCocktail.strDrink}</h2>
-            <img src={this.state.singleCocktail.strDrinkThumb} alt={this.state.singleCocktail.strDrink} />
-          </div>
-          <div className="resultMovie">
-            <h2>{this.state.singleMovie.Title}</h2>
-            <img src={this.state.singleMovie.Poster} alt={this.state.singleMovie.Title} />
-          </div>
-          <div className="resultBook">
-            <h2>{this.state.singleBook ? this.state.singleBook.volumeInfo.title : ''}</h2>
-            <img src={this.state.singleBook ? this.state.singleBook.volumeInfo.imageLinks.thumbnail : ''} alt={this.state.singleBook ? this.state.singleBook.volumeInfo.title : ''} />
-          </div>
-        </div>
-
+        <Form
+          handleSelect={this.handleSelect}
+          handleInput={this.handleInput}
+          updateInfo={this.state}
+          handleClick={this.handleClick}
+        />
+        
+        <Result
+          updateInfo={this.state}
+        />
       </>
 
     )
