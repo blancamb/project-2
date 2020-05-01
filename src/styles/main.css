@@ -33,11 +33,13 @@ h1 {
 
 .homepage-text h2 {
   color: #2a7886;
+  font-family: 'Roboto Mono', monospace;
+
 }
 
 .homepage-text p {
   line-height: 1.6;
-  margin: 0 60px;
+  margin: 0 100px;
 }
 
 button {
@@ -97,6 +99,8 @@ button {
 
 .result-drink h4, .result-movie h4, .result-book h4, .result-tweet h4 {
   margin-bottom: 20px;
+  font-family: 'Roboto Mono', monospace;
+  font-size: 20px;
 }
 
 .result-drink, .result-movie, .result-book, .result-tweet {
