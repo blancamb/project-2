@@ -97,7 +97,7 @@ this.getHashtag()
 
   getSingleBook = () => {
     const singleBook = this.state.allBooks.items[Math.floor(Math.random() * this.state.allBooks.items.length)] 
-    singleBook.volumeInfo.description.subString(0, 10)
+    
     this.setState({ singleBook })
   }
 

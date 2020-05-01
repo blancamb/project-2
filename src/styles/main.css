@@ -70,9 +70,10 @@ button {
   font-weight: normal;
 }
 
-.results-board.result-book h3 {
+.result-book h3 {
   color: #333333;
   font-weight: normal;
+  max-height: 200px;
 }
 
 .results-board h4 {
@@ -139,6 +140,10 @@ button {
   width: 60%;
   height: auto;
   text-align: center;
+}
+
+.result-drink h3 {
+  margin: 0 -40px;
 }
 
 .result-tweet {
