@@ -17,10 +17,10 @@ class Generator extends React.Component {
     movieInfo: null,
     allBooks: {},
     singleBook: null,
-    tweets: ['Best book ever! Check this one out!', 'Great evening with an even greater book', 'Love to read, reading is life!', 'This is on my must-read list guys'],
+    tweets: ['Best book ever! Check this one out!', 'Great evening with an even greater book', 'Love to read, reading is life!', 'This is on my must-read list guys', 'Time to unwind with a good book!', 'That feeling when a book changes your life :)'],
     hashtags: null,
-    readingHashtags: ['#readingisliving', '#bibliophile', '#fuckwithbrains', '#quarantinereading', '#bookaddict', '#ireadanything']
-
+    readingHashtags: ['#readingisliving', '#bibliophile', '#fuckwithbrains', '#quarantinereading', '#bookaddict', '#ireadanything', '#epicreads', '#booknerds', '#bookworm', '#bookhoarder', '#currentlyreading', '#bibliobeauty', '#readathon', '#bookaholic', '#bookobsession'],
+    isHidden: true
   }
 
   async findTheCocktail() {
@@ -30,19 +30,17 @@ class Generator extends React.Component {
 
       const resMovies = await axios.get(`http://www.omdbapi.com/?s=${this.state.movieWord}&apikey=21bb5b6c`)
       this.setState({ allMovies: resMovies.data })
-      console.log("single movie", this.state.singleMovie)
 
       const resBooks = await axios.get(`https://www.googleapis.com/books/v1/volumes?q=intitle:${this.state.movieWord}&key=AIzaSyCScg4gVkYgMBbiT570cWxN7mc8zGgGwmg`)
       this.setState({ allBooks: resBooks.data })
-      console.log("single book", this.state.singleBook)
-
-     
-
+  
 
       this.getSingleCocktail()
       this.getSingleMovie()
       this.getSingleBook()
 this.getHashtag()
+   const isHidden = false
+    this.setState({ isHidden })
     } catch (err) {
       this.props.history.push('./error')
     }
@@ -50,7 +48,6 @@ this.getHashtag()
 
   getHashtag = async () => {
     const resHashtag = await axios.get(`https://api.datamuse.com/words?rel_trg=${this.state.movieWord}`)
-    console.log('hastag', resHashtag.data)
     this.setState({ hashtags: resHashtag.data })
 }
 
@@ -67,9 +64,7 @@ this.getHashtag()
   }
 
   handleClick = () => {
-    console.log("all movies", this.state.allMovies)
     this.findTheCocktail()
-
   }
 
   getSingleCocktail = () => {
@@ -82,11 +77,7 @@ this.getHashtag()
   resCocktailId = async (singleCocktail, num) => {
 
     const resCocktailId = await axios.get(`https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${num}`)
-    console.log(resCocktailId)
     this.setState({ cocktailInfo: resCocktailId.data })
-    console.log('rest of the cocktail info', this.state.cocktailInfo)
-    // console.log('single cocktail:', this.state.singleCocktail.idDrink)
-
   }
 
 
@@ -98,18 +89,15 @@ this.getHashtag()
 
   resMovieId = async () => {
     const resMovieId = await axios.get(`http://www.omdbapi.com/?i=${this.state.singleMovie.imdbID}&apikey=21bb5b6c`)
-    console.log('movie info', resMovieId)
-    console.log('data info', resMovieId.data)
     this.setState({ movieInfo: resMovieId.data })
 
 
   }
 
 
-
   getSingleBook = () => {
-    const singleBook = this.state.allBooks.items[Math.floor(Math.random() * this.state.allBooks.items.length)]
-    console.log('single book function:', singleBook)
+    const singleBook = this.state.allBooks.items[Math.floor(Math.random() * this.state.allBooks.items.length)] 
+    singleBook.volumeInfo.description.subString(0, 10)
     this.setState({ singleBook })
   }
 
@@ -122,17 +110,19 @@ this.getHashtag()
   render() {
     return (
       <>
-        <h1>GENERATOR PAGE</h1>
-        <Form
+      <div className="main">
+      <h1>Curate My Night</h1>
+        <Form className="form"
           handleSelect={this.handleSelect}
           handleInput={this.handleInput}
           updateInfo={this.state}
           handleClick={this.handleClick}
         />
 
-        <Result
+        <Result className="result-all"
           updateInfo={this.state}
         />
+      </div>
       </>
 
     )
