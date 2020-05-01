@@ -36,18 +36,24 @@ class Generator extends React.Component {
       this.setState({ allBooks: resBooks.data })
       console.log("single book", this.state.singleBook)
 
-      const resHashtag = await axios.get(`https://api.datamuse.com/words?rel_trg=${this.state.movieWord}`)
-      console.log('hastag', resHashtag.data)
-      this.setState({ hashtags: resHashtag.data })
+     
 
 
       this.getSingleCocktail()
       this.getSingleMovie()
       this.getSingleBook()
+this.getHashtag()
     } catch (err) {
       this.props.history.push('./error')
     }
   }
+
+  getHashtag = async () => {
+    const resHashtag = await axios.get(`https://api.datamuse.com/words?rel_trg=${this.state.movieWord}`)
+    console.log('hastag', resHashtag.data)
+    this.setState({ hashtags: resHashtag.data })
+}
+
 
 
   handleSelect = e => {
@@ -80,7 +86,7 @@ class Generator extends React.Component {
     this.setState({ cocktailInfo: resCocktailId.data })
     console.log('rest of the cocktail info', this.state.cocktailInfo)
     // console.log('single cocktail:', this.state.singleCocktail.idDrink)
-    console.log('cocktail info:', this.state.cocktailInfo.drinks[0].strInstructions)
+
   }
 
 
