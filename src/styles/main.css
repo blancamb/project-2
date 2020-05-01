@@ -95,6 +95,9 @@ button {
   width: 100%;
 }
 
+.result-drink h4, .result-movie h4, .result-book h4, .result-tweet h4 {
+  margin-bottom: 20px;
+}
 
 .result-drink, .result-movie, .result-book, .result-tweet {
   display: flex;
