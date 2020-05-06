@@ -1,11 +1,12 @@
 import React from 'react';
 import { BrowserRouter, Switch, Route } from 'react-router-dom'
-
 import './App.css';
 import Generator from './components/Generator'
 import Error from './components/Error'
 import Home from './components/Home'
 import Result from './components/Result'
+
+
 
 
 function App() {

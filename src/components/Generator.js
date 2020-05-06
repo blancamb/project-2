@@ -25,13 +25,13 @@ class Generator extends React.Component {
 
   async findTheCocktail() {
     try {
-      const resCocktails = await axios.get(`https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=${this.state.selectedSpirit}`)
+      const resCocktails = await axios.get(`https://www.thecocktaildb.com/api/json/v1/${process.env.REACT_APP_THECOCKTAILDB_KEY}/filter.php?i=${this.state.selectedSpirit}`)
       this.setState({ allCocktails: resCocktails.data })
 
-      const resMovies = await axios.get(`http://www.omdbapi.com/?s=${this.state.movieWord}&apikey=21bb5b6c`)
+      const resMovies = await axios.get(`http://www.omdbapi.com/?s=${this.state.movieWord}&apikey=${process.env.REACT_APP_OMDB_KEY}`)
       this.setState({ allMovies: resMovies.data })
 
-      const resBooks = await axios.get(`https://www.googleapis.com/books/v1/volumes?q=intitle:${this.state.movieWord}&key=AIzaSyCScg4gVkYgMBbiT570cWxN7mc8zGgGwmg`)
+      const resBooks = await axios.get(`https://www.googleapis.com/books/v1/volumes?q=intitle:${this.state.movieWord}&key=${process.env.REACT_APP_GOOGLEBOOKS_KEY}`)
       this.setState({ allBooks: resBooks.data })
   
 
@@ -76,7 +76,7 @@ this.getHashtag()
 
   resCocktailId = async (singleCocktail, num) => {
 
-    const resCocktailId = await axios.get(`https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${num}`)
+    const resCocktailId = await axios.get(`https://www.thecocktaildb.com/api/json/v1/${process.env.REACT_APP_THECOCKTAILDB_KEY}/lookup.php?i=${num}`)
     this.setState({ cocktailInfo: resCocktailId.data })
   }
 
@@ -88,7 +88,7 @@ this.getHashtag()
   }
 
   resMovieId = async () => {
-    const resMovieId = await axios.get(`http://www.omdbapi.com/?i=${this.state.singleMovie.imdbID}&apikey=21bb5b6c`)
+    const resMovieId = await axios.get(`http://www.omdbapi.com/?i=${this.state.singleMovie.imdbID}&apikey=${process.env.REACT_APP_OMDB_KEY}`)
     this.setState({ movieInfo: resMovieId.data })
 
 
